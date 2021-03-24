@@ -13,16 +13,6 @@ function App() {
     showPersons: false
   });
 
-  const switchNameHandler = (newName) => {
-    setPersonsState({
-      persons: [
-        { name: newName, age: 28 },
-        { name: 'Manu', age: 29 },
-        { name: 'Stephanie', age: 27 },
-      ]
-    })
-  };
-
   const nameChangedHandler = (event) => {
     setPersonsState({
       persons: [
@@ -30,6 +20,16 @@ function App() {
         { name: event.target.value, age: 29 },
         { name: 'Stephanie', age: 26 },
       ]
+    });
+  }
+
+  const deletePersonHandler = (personIndex) => {
+    personsState.persons.splice(personIndex, 1);
+    
+    setPersonsState({
+      persons: personsState.persons,
+      otherState: 'some other value',
+      showPersons: true
     });
   }
 
@@ -43,7 +43,6 @@ function App() {
       otherState: 'some other value',
       showPersons: !personsState.showPersons
     });
-
   }
   
   const style = {
@@ -59,10 +58,11 @@ function App() {
   if (personsState.showPersons) {
     persons = (
       <div>
-        {personsState.persons.map(person => {
+        {personsState.persons.map((person, index) => {
           return <Person 
             name={person.name} 
-            age={person.age}/>
+            age={person.age}
+            click={() => deletePersonHandler(index)} />
         })}
       </div> 
     ); 
