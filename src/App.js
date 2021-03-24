@@ -64,9 +64,10 @@ function App() {
       <div>
         {personsState.persons.map((person, index) => {
           return <Person 
-            name={person.name} 
-            age={person.age}
-            click={deletePersonHandler.bind(this, index)} />
+          click={deletePersonHandler.bind(this, index)}
+          name={person.name} 
+          age={person.age}
+          key={index} />
         })}
       </div> 
     ); 
