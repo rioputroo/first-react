@@ -13,13 +13,13 @@ function App() {
     showPersons: false
   });
 
-  const nameChangedHandler = (event) => {
+  const nameChangedHandler = (event, index) => {
+    personsState.persons[index].name = event.target.value;
+
     setPersonsState({
-      persons: [
-        { name: 'Max', age: 28 },
-        { name: event.target.value, age: 29 },
-        { name: 'Stephanie', age: 26 },
-      ]
+      persons: personsState.persons,
+      otherState: 'some other value',
+      showPersons: true
     });
   }
 
@@ -67,7 +67,8 @@ function App() {
           click={deletePersonHandler.bind(this, index)}
           name={person.name} 
           age={person.age}
-          key={index} />
+          key={index}
+          changed={(event) => nameChangedHandler(event, index)} />
         })}
       </div> 
     ); 
