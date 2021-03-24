@@ -54,6 +54,20 @@ function App() {
     cursor: 'pointer'
   }
 
+  let persons = null;
+
+  if (personsState.showPersons) {
+    persons = (
+      <div>
+        {personsState.persons.map(person => {
+          return <Person 
+            name={person.name} 
+            age={person.age}/>
+        })}
+      </div> 
+    ); 
+  }
+
   return (
     <div className="App">
       <h1>Hi, I'm React App</h1>
@@ -61,24 +75,7 @@ function App() {
       <button 
         style={style}
         onClick={togglePersonsHandler}>Toggle Persons</button>
-      { 
-        personsState.showPersons ?
-          <div>
-            <Person 
-              name={personsState.persons[0].name} 
-              age={personsState.persons[0].age}
-              changed={nameChangedHandler}/>
-            <Person 
-              name={personsState.persons[1].name} 
-              age={personsState.persons[1].age}
-              click={switchNameHandler.bind(this, 'Max!')}
-              changed={nameChangedHandler}>My Hobbies: Racing</Person>
-            <Person 
-              name={personsState.persons[2].name} 
-              age={personsState.persons[2].age}
-              changed={nameChangedHandler}/>
-          </div> : null
-      }
+      {persons}
     </div>
   );
 }
