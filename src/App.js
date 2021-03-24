@@ -25,6 +25,10 @@ function App() {
 
   const deletePersonHandler = (personIndex) => {
     personsState.persons.splice(personIndex, 1);
+
+    // updating state immutably by copy the array first
+    // const persons = [...personsState.persons];
+    // persons.splice(personIndex, 1);
     
     setPersonsState({
       persons: personsState.persons,
@@ -62,7 +66,7 @@ function App() {
           return <Person 
             name={person.name} 
             age={person.age}
-            click={() => deletePersonHandler(index)} />
+            click={deletePersonHandler.bind(this, index)} />
         })}
       </div> 
     ); 
