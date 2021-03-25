@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Person from '../components/Persons/Person/Person';
+import Cockpit from '../components/Cockpit/Cockpit';
+import Persons from '../components/Persons/Persons';
 import './App.css';
 
 function App() {
@@ -63,40 +64,23 @@ function App() {
   if (personsState.showPersons) {
     persons = (
       <div>
-        {personsState.persons.map((person, index) => {
-          return (
-            <Person
-              click={deletePersonHandler.bind(this, index)}
-              name={person.name}
-              age={person.age}
-              key={index}
-              changed={(event) => nameChangedHandler(event, index)}
-            />
-          );
-        })}
+        <Persons
+          persons={personsState.persons}
+          clicked={deletePersonHandler}
+          changed={nameChangedHandler}
+        />
       </div>
     );
 
     style.backgroundColor = 'red';
   }
 
-  const classes = [];
-
-  if (personsState.persons.length <= 2) {
-    classes.push('red');
-  }
-
-  if (personsState.persons.length <= 1) {
-    classes.push('bold');
-  }
-
   return (
     <div className="App">
-      <h1>Hi, I'm React App</h1>
-      <p className={classes.join(' ')}>This is really working</p>
-      <button style={style} onClick={togglePersonsHandler}>
-        Toggle Persons
-      </button>
+      <Cockpit 
+        personsState={personsState}
+        style={style}
+        clicked={togglePersonsHandler} />
       {persons}
     </div>
   );
