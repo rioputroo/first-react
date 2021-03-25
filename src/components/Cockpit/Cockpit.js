@@ -14,7 +14,7 @@ function Cockpit(props) {
 
   return (
     <div>
-      <h1>Hi, I'm React App</h1>
+      <h1>{props.title}</h1>
       <p className={classes.join(' ')}>This is really working</p>
       <button style={props.style} onClick={props.clicked}>
         Toggle Persons

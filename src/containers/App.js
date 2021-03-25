@@ -3,7 +3,7 @@ import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
 import './App.css';
 
-function App() {
+function App(props) {
   const [personsState, setPersonsState] = useState({
     persons: [
       { name: 'Max', age: 28 },
@@ -77,10 +77,7 @@ function App() {
 
   return (
     <div className="App">
-      <Cockpit 
-        personsState={personsState}
-        style={style}
-        clicked={togglePersonsHandler} />
+      <Cockpit title={props.appTitle} personsState={personsState} style={style} clicked={togglePersonsHandler} />
       {persons}
     </div>
   );
