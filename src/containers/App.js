@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Persons from '../components/Persons/Persons';
+import withClass from '../hoc/withClass';
+import Auxiliary from '../hoc/Auxiliary';
+import AuthContext from '../context/auth-context';
 import './App.css';
 
 function App(props) {
@@ -13,6 +16,7 @@ function App(props) {
     otherState: 'some other value',
     showPersons: false,
     showCockpit: true,
+    authenticationStatus: false,
   });
 
   const toggleCockpitDisplay = () => {
@@ -60,6 +64,15 @@ function App(props) {
     });
   };
 
+  const loginHandler = () => {
+    setPersonsState({
+      persons: personsState.persons,
+      otherState: 'some other value',
+      showPersons: true,
+      authenticationStatus: true,
+    });
+  };
+
   const style = {
     backgroundColor: 'green',
     color: 'white',
@@ -78,6 +91,7 @@ function App(props) {
           persons={personsState.persons}
           clicked={deletePersonHandler}
           changed={nameChangedHandler}
+          isAuthenticated={personsState.authenticationStatus}
         />
       </div>
     );
@@ -86,19 +100,24 @@ function App(props) {
   }
 
   return (
-    <div className="App">
+    <Auxiliary>
       <button onClick={() => toggleCockpitDisplay}>remove cockpit</button>
-      {personsState.showCockpit ? (
-        <Cockpit
-          title={props.appTitle}
-          personsState={personsState}
-          style={style}
-          clicked={togglePersonsHandler}
-        />
-      ) : null}
-      {persons}
-    </div>
+      <AuthContext.Provider
+        value={{ authenticated: personsState.authenticationStatus, login: loginHandler }}
+      >
+        {personsState.showCockpit ? (
+          <Cockpit
+            title={props.appTitle}
+            personsState={personsState}
+            style={style}
+            clicked={togglePersonsHandler}
+            login={loginHandler}
+          />
+        ) : null}
+        {persons}
+      </AuthContext.Provider>
+    </Auxiliary>
   );
 }
 
-export default App;
+export default withClass(App, 'App');
