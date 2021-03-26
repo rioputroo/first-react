@@ -1,7 +1,15 @@
-import React from 'react';
-import './Cockpit.css'; 
+import React, { useEffect } from 'react';
+import './Cockpit.css';
 
 function Cockpit(props) {
+  useEffect(() => {
+    console.log('[Cockpit.js] use effect');
+    return () => {
+        console.log('[Cockpit.js] cleanup work')
+    };
+  }, []);
+
+
   const classes = [];
 
   if (props.personsState.persons.length <= 2) {

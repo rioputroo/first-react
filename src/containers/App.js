@@ -12,7 +12,17 @@ function App(props) {
     ],
     otherState: 'some other value',
     showPersons: false,
+    showCockpit: true,
   });
+
+  const toggleCockpitDisplay = () => {
+    setPersonsState({
+      persons: personsState.persons,
+      otherState: personsState.otherState,
+      showPersons: personsState.showPersons,
+      showCockpit: !personsState.showCockpit,
+    });
+  };
 
   const nameChangedHandler = (event, index) => {
     personsState.persons[index].name = event.target.value;
@@ -77,7 +87,15 @@ function App(props) {
 
   return (
     <div className="App">
-      <Cockpit title={props.appTitle} personsState={personsState} style={style} clicked={togglePersonsHandler} />
+      <button onClick={() => toggleCockpitDisplay}>remove cockpit</button>
+      {personsState.showCockpit ? (
+        <Cockpit
+          title={props.appTitle}
+          personsState={personsState}
+          style={style}
+          clicked={togglePersonsHandler}
+        />
+      ) : null}
       {persons}
     </div>
   );
